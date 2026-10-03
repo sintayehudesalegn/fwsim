@@ -22,7 +22,7 @@ It models how a real firewall makes decisions, using synthetic traffic only.
 ```bash
 git clone https://github.com/sintayehudesalegn/fwsim.git
 cd fwsim
-python3 -m venv venv && source venv/bin/activate`
+python3 -m venv venv && source venv/bin/activate
 pip install -e ".[dev]"
 ```
 
