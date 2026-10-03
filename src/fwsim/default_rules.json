@@ -1,0 +1,75 @@
+{
+  "default_policy": "deny",
+  "stateful": true,
+  "connection_timeout_seconds": 60,
+  "rate_limit": { "max_packets": 30, "window_seconds": 10 },
+  "rules": [
+    {
+      "id": "block-threat-intel-range",
+      "priority": 5,
+      "action": "deny",
+      "direction": "inbound",
+      "src": "203.0.113.0/24",
+      "description": "Known-bad source range from a blocklist"
+    },
+    {
+      "id": "allow-outbound-dns",
+      "priority": 10,
+      "action": "allow",
+      "direction": "outbound",
+      "protocol": "udp",
+      "dst_ports": 53
+    },
+    {
+      "id": "allow-outbound-ntp",
+      "priority": 11,
+      "action": "allow",
+      "direction": "outbound",
+      "protocol": "udp",
+      "dst_ports": 123
+    },
+    {
+      "id": "allow-outbound-web",
+      "priority": 20,
+      "action": "allow",
+      "direction": "outbound",
+      "protocol": "tcp",
+      "dst_ports": [80, 443]
+    },
+    {
+      "id": "allow-inbound-web-server",
+      "priority": 30,
+      "action": "allow",
+      "direction": "inbound",
+      "protocol": "tcp",
+      "dst": "192.168.1.10",
+      "dst_ports": [80, 443]
+    },
+    {
+      "id": "allow-ssh-from-vpn",
+      "priority": 40,
+      "action": "allow",
+      "direction": "inbound",
+      "protocol": "tcp",
+      "src": "10.8.0.0/24",
+      "dst": "192.168.1.20",
+      "dst_ports": 22
+    },
+    {
+      "id": "allow-ping-to-web-server",
+      "priority": 50,
+      "action": "allow",
+      "direction": "inbound",
+      "protocol": "icmp",
+      "dst": "192.168.1.10"
+    },
+    {
+      "id": "deny-legacy-admin",
+      "priority": 60,
+      "action": "deny",
+      "protocol": "tcp",
+      "dst_ports": [23, 3389],
+      "description": "Explicit deny for telnet and RDP"
+    }
+  ]
+}
